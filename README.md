@@ -69,8 +69,8 @@ mvn spring-boot:run
 4. Introduce el siguiente JSON en el cuerpo de la solicitud:
 ```json
 [
-  { "id": 1, "name": "Item A", "value": 100.0 },
-  { "id": 2, "name": "Item B", "value": 50.0 }
+  { "id": 1, "name": "Item A", "itemValue": 100.0 },
+  { "id": 2, "name": "Item B", "itemValue": 50.0 }
 ]
 ```
 5. Haz clic en Send.
