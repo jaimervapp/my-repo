@@ -1,0 +1,10 @@
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/model/CartResponse.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/controller/ItemController.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/util/CsvProcessor.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/service/CartService.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/EcommerceApiApplication.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/model/Item.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/controller/CartController.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/App.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/service/ItemService.java
+/home/jaime/ecommerce-api/ecommerce-api/src/main/java/com/example/ecommerce/repo/ItemRepository.java

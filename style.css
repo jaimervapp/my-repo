@@ -1,0 +1,14 @@
+src/main/java/com/example/ecommerce/
+├── controller/
+│   ├── CartController.java
+│   ├── ItemController.java
+├── model/
+│   ├── Item.java
+├── service/
+│   ├── CartService.java
+│   ├── ItemService.java
+├── util/
+│   ├── CsvProcessor.java
+├── repository/
+│   ├── ItemRepository.java
+└── EcommerceApiApplication.java
