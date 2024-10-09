@@ -29,6 +29,7 @@ Esta es una API REST para un servicio de e-commerce, diseñada para gestionar un
   git clone https://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@github.com/jaimervapp/ecommerce-api.git
   cd my-repo
 ```
+Si hay problemas con el token, descargar el repo en zip en local, descomprimir y abrir terminal en esa carpeta. 
 2. Compilar el proyecto con Maven:
 ```bash
 mvn clean install
