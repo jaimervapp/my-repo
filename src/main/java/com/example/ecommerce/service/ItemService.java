@@ -17,45 +17,43 @@ import java.util.concurrent.atomic.AtomicReference;
 public class ItemService {
 
     private final CsvProcessor csvProcessor;
-    private static final String UPLOAD_DIR = "/home/jaime/ecommerce-api/ecommerce-api/uploads/";
 
     public ItemService(CsvProcessor csvProcessor) {
         this.csvProcessor = csvProcessor;
     }
 
-    public String importItems(MultipartFile file) throws IOException {
-        // Validar el archivo antes de procesarlo
+    public String importItems(MultipartFile file, String uploadDir) throws IOException {
+        // Validate the file before processing
         if (!csvProcessor.isValidCsvFile(file)) {
             throw new IllegalArgumentException("Invalid file type. Please upload a CSV file.");
         }
 
-        // Crear el directorio de subidas si no existe
-        Path uploadPath = Paths.get(UPLOAD_DIR);
+        // Create the uploads directory if it does not exist
+        Path uploadPath = Paths.get(uploadDir);
         if (!Files.exists(uploadPath)) {
             Files.createDirectories(uploadPath);
         }
 
-        // Guardar el archivo en el directorio de subidas
-        File tempFile = new File(UPLOAD_DIR + file.getOriginalFilename());
+        // Save the file to the uploads directory
+        File tempFile = new File(uploadDir + File.separator + file.getOriginalFilename());
         file.transferTo(tempFile);
 
-        // Variables para el total de valor y número de artículos
+        // Variables to store the total value and the number of items
         AtomicReference<Double> totalValue = new AtomicReference<>(0.0);
         AtomicInteger totalItems = new AtomicInteger(0);
 
-        // Procesar artículos desde el archivo CSV en lotes
+        // Process items from the CSV file in batches
         csvProcessor.readItemsFromCsvInBatches(tempFile, batch -> {
-            // Sumar el valor de los artículos en el lote actual
+            // Sum the value of the items in the current batch
             double batchTotal = batch.stream()
-                .filter(item -> item.getItemValue() != null) // Asegurarse de que no haya valores nulos
+                .filter(item -> item.getItemValue() != null) // Ensure no null values
                 .mapToDouble(Item::getItemValue)
                 .sum();
             totalValue.updateAndGet(v -> v + batchTotal);
             totalItems.addAndGet(batch.size());
         });
 
-        // Devolver el número de artículos y el valor total
+        // Return the number of items and the total value
         return "Import successful: " + totalItems.get() + " items imported. Total value: " + totalValue.get();
     }
 }
-
