@@ -25,10 +25,10 @@ Esta es una API REST para un servicio de e-commerce, diseñada para gestionar un
 
 ## Instalación
 1. Clonar el repositorio:
-   ```bash
-   git clone https://github.com/jaimervapp/my-repo.git
-   cd my-repo
-   ```
+```bash
+  git clone https://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@github.com/jaimervapp/ecommerce-api.git
+  cd my-repo
+```
 2. Compilar el proyecto con Maven:
 ```bash
 mvn clean install
