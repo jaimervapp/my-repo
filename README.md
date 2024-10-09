@@ -93,8 +93,15 @@ http://localhost:8080/items/import
 ```
 3. En la pestaña Body, selecciona la opción form-data.
 4. Añade una clave llamada file y en el campo de valor, selecciona el archivo CSV desde tu sistema.
-5. Haz clic en Send.
-6. La respuesta debería ser algo similar a:
+Puedes generar un csv de ete tipo:
+```csv
+id,name,itemValue
+11,Articulo 11,100
+12,Articulo 12,120
+13,Articulo 13,130
+```
+6. Haz clic en Send.
+7. La respuesta debería ser algo similar a:
 ```json
 {
   "message": "Import successful: 200 items imported. Total value: 5000.0"
