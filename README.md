@@ -100,6 +100,7 @@ id,name,itemValue
 12,Articulo 12,120
 13,Articulo 13,130
 ```
+5. Añade la clave uploadDir tipo Text, y en Value pon la ruta donde quieras dejar los ficheros subidos.
 6. Haz clic en Send.
 7. La respuesta debería ser algo similar a:
 ```json
