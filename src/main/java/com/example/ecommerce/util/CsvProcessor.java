@@ -7,41 +7,57 @@ import org.springframework.web.multipart.MultipartFile;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 @Component
 public class CsvProcessor {
 
-    public List<Item> readItemsFromCsv(File file) {
-        List<Item> items = new ArrayList<>();
+    private static final int BATCH_SIZE = 100; // Tamaño del lote para la lectura
+
+    public void readItemsFromCsvInBatches(File file, Consumer<List<Item>> batchConsumer) {
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
-            boolean isFirstLine = true;
+            List<Item> batch = new ArrayList<>();
+            
+            // Leer la primera línea para ignorar el encabezado
+            String headerLine = br.readLine();
+
             while ((line = br.readLine()) != null) {
-                // Skip the first line if it contains headers
-                if (isFirstLine) {
-                    isFirstLine = false;
+                String[] values = line.split(",");
+                try {
+                    // Intentar parsear los valores
+                    Long id = Long.parseLong(values[0]);
+                    String name = values[1];
+                    Double value = Double.parseDouble(values[2]);
+                    Item item = new Item(id, name, value);
+                    batch.add(item);
+                } catch (NumberFormatException e) {
+                    // Ignorar líneas que no se pueden parsear (por ejemplo, encabezados mal formados)
+                    System.err.println("Error parsing line: " + line + " - " + e.getMessage());
                     continue;
                 }
 
-                // Process the data lines
-                String[] values = line.split(",");
-                Item item = new Item(Long.parseLong(values[0]), values[1], Double.parseDouble(values[2]));
-                items.add(item);
+                // Procesar el lote cuando alcance el tamaño definido
+                if (batch.size() >= BATCH_SIZE) {
+                    batchConsumer.accept(batch);
+                    batch.clear();
+                }
+            }
+
+            // Procesar el lote restante si hay elementos
+            if (!batch.isEmpty()) {
+                batchConsumer.accept(batch);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return items;
     }
 
     public boolean isValidCsvFile(MultipartFile file) {
-        // Check the file extension
         String fileName = file.getOriginalFilename();
         if (fileName == null || !fileName.toLowerCase().endsWith(".csv")) {
             return false;
         }
-
-        // Check the MIME type of the file
         String mimeType = file.getContentType();
         return "text/csv".equalsIgnoreCase(mimeType) || "application/vnd.ms-excel".equalsIgnoreCase(mimeType);
     }
